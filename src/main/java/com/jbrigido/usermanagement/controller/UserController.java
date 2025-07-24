@@ -3,6 +3,9 @@ package com.jbrigido.usermanagement.controller;
 import java.net.URI;
 import java.util.List;
 
+import com.jbrigido.usermanagement.dto.user.UserRequestDTO;
+import com.jbrigido.usermanagement.dto.user.UserResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,14 +69,13 @@ public class UserController {
      */
 
     @PostMapping
-    public ResponseEntity<Users> addUser(@RequestBody Users user) {
-
+    public ResponseEntity<Users> addUser(@Valid @RequestBody UserRequestDTO user) {
+        UserResponseDTO response = service.addUser(user);
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequestUri()
+                .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(user.getIduser())
+                .buildAndExpand(response.getUserid())
                 .toUri();
-        service.addUser(user);
         return ResponseEntity.created(location).build();
     }
 
@@ -98,7 +100,7 @@ public class UserController {
      */
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody Users user) {
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserRequestDTO user) {
         service.updateUser(user);
         return ResponseEntity.noContent().build();
     }
@@ -111,7 +113,7 @@ public class UserController {
      */
 
     @PatchMapping
-    public ResponseEntity<?> updatePatchUser(@RequestBody Users user) {
+    public ResponseEntity<?> updatePatchUser(@RequestBody UserRequestDTO user) {
         service.patchUser(user);
         return ResponseEntity.noContent().build();
     }

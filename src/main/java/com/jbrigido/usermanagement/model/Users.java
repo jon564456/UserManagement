@@ -8,9 +8,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- *
  * Represents an entity in the database
- *
  */
 @Entity
 @Table(name = "users")
@@ -19,10 +17,9 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer iduser;
-    @NotBlank(message = "The username cannot be blank")
     private String username;
-    @NotBlank(message = "The password cannot be blank")
     private String password;
+    private String email;
 
     public Users() {
     }
@@ -57,4 +54,11 @@ public class Users {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
