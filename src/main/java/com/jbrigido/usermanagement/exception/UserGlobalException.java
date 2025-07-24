@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class UserGlobalException {
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(UserNotFound.class)
     public ResponseEntity<?> userNotFound(UserNotFound ex) {
         return ResponseEntity.status(404).body(ex.getMessage());
     }
